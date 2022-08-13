@@ -1,4 +1,4 @@
-# vagrant-infra
+# vagrant-kubernetes
 
 This Vagrantfile along with the bootstrap scripts have everything to run a local multi-node kubernetes on docker.
 
