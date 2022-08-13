@@ -1,0 +1,32 @@
+# a cluster with 1 control-plane nodes and 3 workers
+apiVersion: k3d.io/v1alpha4
+kind: Simple
+metadata:
+  name: k8s-local
+servers: 1
+agents: 3
+image: rancher/k3s:v1.23.7-k3s1
+subnet: "172.30.0.0/16"
+volumes:
+  - volume: "$PWD/data-files:/data-files"
+    nodeFilters:
+      - agent:*
+options:
+  k3d:
+    wait: true
+    timeout: "300s"
+    disableLoadbalancer: true
+  k3s: # options passed on to K3s itself
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+      - arg: --disable=servicelb
+        nodeFilters:
+          - server:*
+      - arg: --node-taint=node-role.kubernetes.io/master:NoSchedule
+        nodeFilters:
+          - server:*
+  kubeconfig:
+    updateDefaultKubeconfig: true # add new cluster to your default Kubeconfig; same as `--kubeconfig-update-default` (default: true)
+    switchCurrentContext: true # also set current-context to the new cluster's context; same as `--kubeconfig-switch-context` (default: true)
