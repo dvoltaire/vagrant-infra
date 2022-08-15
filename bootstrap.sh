@@ -26,7 +26,7 @@ apt-get update &>/dev/null && apt-get install -y \
   neovim vim \
   tree jq net-tools \
   curl wget lynx \
-  zsh git \
+  zsh git build-essential \
   sipcalc \
   haproxy \
   snap &>/dev/null
